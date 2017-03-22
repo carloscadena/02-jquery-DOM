@@ -21,7 +21,6 @@ Article.prototype.toHtml = function() {
   for that before this current article gets rendered to our
   DOM. */
 
-
   if (!this.publishedOn) $newArticle.addClass('draft');
   $newArticle.data('category', this.category);
 
@@ -33,9 +32,13 @@ Article.prototype.toHtml = function() {
     3. article title,
     4. article body, and
     5. publication date. */
+  $newArticle.find('h1').text(this.title);
+  $newArticle.find('address a').text(this.author);
+  $newArticle.find('a').attr('href', this.authorUrl);
+  $newArticle.find('.article-body').html(this.body);
 
   // Display the date as a relative number of 'days ago'
-  $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000) + ' days ago');
+  $newArticle.find('time').html('about ' + parseInt((new Date() - new Date(this.publishedOn)) / 60 / 60 / 24 / 1000) + ' days ago');
   $newArticle.append('<hr>');
   return $newArticle;
 };
@@ -53,4 +56,3 @@ rawData.forEach(function(articleObject) {
 articles.forEach(function(a) {
   $('#articles').append(a.toHtml());
 });
-console.log(articles);
